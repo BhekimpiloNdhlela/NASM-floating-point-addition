@@ -10,10 +10,10 @@ class CMDCLR:
 def process_output(output_file='output.txt'):
     open_output_file = open(output_file)
     header_string = CMDCLR.HEADER + CMDCLR.BOLD + CMDCLR.UNDERLINE
-    header_string += '--'*75 + '\n'
-    header_string += 'operand1\t+\toperand2\tCLANG\t\tNASM\t\tBUILT-IN'
-    header_string += '\tABSOLUTE ERROR:\t\tCLANG\t\t\t\tNASM'
-    header_string += '\n'+'--'*75
+    header_string += '--'*70 + '\n'
+    header_string += 'operand1\t+\toperand2\t\tCLANG\t\tNASM\t\tBUILT-IN'
+    header_string += '\t\tSTATUS CLANG\t\tSTATUS NASM'
+    header_string += '\n'+'--'*70
     print(header_string + CMDCLR.ENDC)
 
     for row in open_output_file:
@@ -33,20 +33,14 @@ def _print_output(a, b, x, y, z):
     abs_error = |xc - xa|, where: > xc = the computed value(computed by addf)
                                   > xa = the actual value (computed by c)
     """
-    absolute_error = lambda addf_c, c_res: abs(addf_c - c_res)
 
-    abserr1 = absolute_error(x, z)
-    abserr2 = absolute_error(y, z)
-    warn1 = (CMDCLR.FAIL,'BAD') if abserr1 > 0.000099 else (CMDCLR.OKGREEN,'OKAY')
-    warn2 = (CMDCLR.FAIL,'BAD') if abserr2 > 0.000099 else (CMDCLR.OKGREEN,'OKAY')
+    status = lambda t: (CMDCLR.FAIL,'BAD  :-(') if t != z else (CMDCLR.OKGREEN,'OKAY :-)')
+    sts1, sts2 = status(x), status(y)
 
     results_string = '{:15.8f} + {:15.8f} ='.format(a, b)
-    results_string += CMDCLR.OKBLUE+'({:15.8f} {:15.8f}'.format(x, y)
-    results_string += CMDCLR.BOLD+CMDCLR.OKBLUE+'{:15.8f})'.format(z)
-    results_string += CMDCLR.WARNING+'\t|xc-xa| = {:.8f}\t'.format(abserr1)+CMDCLR.ENDC
-    results_string += CMDCLR.BOLD+warn1[0]+warn1[1]+CMDCLR.ENDC
-    results_string += CMDCLR.WARNING+'\t|xc-xa| = {:.8f}\t'.format(abserr2)+CMDCLR.ENDC
-    results_string += CMDCLR.BOLD+warn2[0]+warn2[1]+CMDCLR.ENDC
+    results_string += CMDCLR.OKBLUE+'\t({:16.8f} {:16.8f} {:16.8f})'.format(x, y, z)
+    results_string += CMDCLR.BOLD+sts1[0]+'\t\t'+sts1[1]+CMDCLR.ENDC
+    results_string += CMDCLR.BOLD+sts2[0]+'\t\t'+sts2[1]+CMDCLR.ENDC
 
     print(results_string)
 
