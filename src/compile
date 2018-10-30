@@ -11,7 +11,7 @@ def process_output(output_file='output.txt'):
     open_output_file = open(output_file)
     for row in open_output_file:
         row = array([float(ele) for ele in row.strip('\n').split(',')])
-        _print_output(row[0], row[1], row[2], row[3])
+        _print_output(row[0], row[1], row[2], row[4])
 
 def _print_output(a, b, x, c):
     """
@@ -38,9 +38,9 @@ def _print_output(a, b, x, c):
 
 if __name__ == '__main__':
     system('rm tut6')
-    if WEXITSTATUS(system('gcc -Wall -m32 -pedantic tutorial06.c -o tut6')) == 0:
+    if WEXITSTATUS(system('make clean&&make all')) == 0:
         system('clear')
-        system('./tut6 > output.txt')
+        system('./fadd ../test/test_cases.txt > output.txt')
         process_output()
         system('rm output.txt')
     else:
