@@ -57,7 +57,7 @@ void addff(float a, float b, float *x)
     } else {
         s3 = 1;
     }
-  /* make a binary string for the fractional part */
+    /* make a binary string for the fractional part */
     num2bin(f3);
     if (f3) {
         for (i = 0; i < 9; i++) {
