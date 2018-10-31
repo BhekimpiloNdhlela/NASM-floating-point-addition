@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from os import system, WEXITSTATUS
-from numpy import array
+import numpy as np
 
 class CMDCLR:
     HEADER, OKBLUE, OKGREEN = '\033[95m', '\033[94m', '\033[92m'
@@ -9,15 +9,15 @@ class CMDCLR:
 
 def process_output(output_file='output.txt'):
     open_output_file = open(output_file)
-    header_string = CMDCLR.HEADER + CMDCLR.BOLD + CMDCLR.UNDERLINE
-    header_string += '--'*70 + '\n'
-    header_string += 'operand1\t+\toperand2\t\tCLANG\t\tNASM\t\tBUILT-IN'
-    header_string += '\t\tSTATUS CLANG\t\tSTATUS NASM'
-    header_string += '\n'+'--'*70
+    header_string = CMDCLR.HEADER + CMDCLR.BOLD +CMDCLR.UNDERLINE
+    header_string += '--'*60 + '\n'
+    header_string += 'operand1\t+\toperand2\t\tr CLANG\t\tr NASM\t\tr BUILT-IN'
+    header_string += '\ts CLANG\t\ts NASM'
+    header_string += '\n'+'--'*60
     print(header_string + CMDCLR.ENDC)
 
     for row in open_output_file:
-        row = array([float(ele) for ele in row.strip('\n').split(',')])
+        row = np.array([float(ele) for ele in row.strip('\n').split(',')])
         _print_output(row[0], row[1], row[2], row[3], row[4])
 
 def _print_output(a, b, x, y, z):
@@ -39,8 +39,8 @@ def _print_output(a, b, x, y, z):
 
     results_string = '{:15.8f} + {:15.8f} ='.format(a, b)
     results_string += CMDCLR.OKBLUE+'\t({:16.8f} {:16.8f} {:16.8f})'.format(x, y, z)
-    results_string += CMDCLR.BOLD+sts1[0]+'\t\t'+sts1[1]+CMDCLR.ENDC
-    results_string += CMDCLR.BOLD+sts2[0]+'\t\t'+sts2[1]+CMDCLR.ENDC
+    results_string += CMDCLR.BOLD+sts1[0]+'\t'+sts1[1]+CMDCLR.ENDC
+    results_string += CMDCLR.BOLD+sts2[0]+'\t'+sts2[1]+CMDCLR.ENDC
 
     print(results_string)
 
